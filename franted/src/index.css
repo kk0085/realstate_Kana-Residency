@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+main,
+section,
+article,
+aside,
+footer,
+nav,
+form,
+.flex,
+.grid {
+  min-width: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #030817;
+  color: #ffffff;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+.navbar-shell {
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .navbar-shell {
+    gap: 0.75rem;
+    padding-inline: 1rem;
+  }
+
+  .navbar-cta {
+    padding-inline: 1rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1180px) {
+  .navbar-desktop-nav {
+    display: none !important;
+  }
+
+  .navbar-cta {
+    display: none !important;
+  }
+
+  .navbar-menu-button {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .navbar-mobile-panel {
+    display: block !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar-shell {
+    padding-inline: 0.75rem;
+  }
+
+  .navbar-logo {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 0.75rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  p,
+  a,
+  span {
+    overflow-wrap: anywhere;
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(90deg,
+      #c084fc 0%,
+      #8b5cf6 45%,
+      #16b8ff 100%);
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gradient-btn {
+  background: linear-gradient(100deg,
+      #8b35f5,
+      #694cff,
+      #079fff);
+}
+
+.glass {
+  background: rgba(8, 15, 38, 0.78);
+  border: 1px solid rgba(255, 255, 255, .12);
+  backdrop-filter: blur(18px);
+}
+
+.property-card {
+  background: linear-gradient(180deg,
+      rgba(10, 21, 50, .98),
+      rgba(4, 11, 29, .98));
+
+  border: 1px solid rgba(116, 92, 255, .30);
+}
+
+.hero-overlay {
+  background:
+    linear-gradient(90deg,
+      #030817 0%,
+      rgba(3, 8, 23, .95) 28%,
+      rgba(3, 8, 23, .45) 62%,
+      rgba(3, 8, 23, .05) 100%),
+    linear-gradient(0deg,
+      #030817 0%,
+      transparent 40%);
+}

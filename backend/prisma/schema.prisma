@@ -1,0 +1,149 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  leads  Lead[]
+  visits Visit[]
+}
+
+model Property {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  location    String
+  type        String
+  price       String
+  bedrooms    Int      @default(0)
+  area        String?
+  description String?
+  image       String?
+  status      String   @default("AVAILABLE")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  leads  Lead[]
+  visits Visit[]
+}
+
+model Project {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  location    String
+  units       Int      @default(0)
+  available   Int      @default(0)
+  price       String
+  possession  String?
+  description String?
+  image       String?
+  status      String   @default("UPCOMING")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  leads  Lead[]
+  visits Visit[]
+}
+
+model Lead {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  email   String?
+  phone   String
+  source  String?
+  message String?
+  status  String  @default("NEW")
+
+  propertyId String?   @db.ObjectId
+  property   Property? @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+
+  projectId String?  @db.ObjectId
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  assignedToId String? @db.ObjectId
+  assignedTo   User?   @relation(fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  visits Visit[]
+}
+
+model Visit {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  customer String
+  phone    String
+  date     DateTime
+  time     String
+  status   String   @default("SCHEDULED")
+  notes    String?
+
+  propertyId String?   @db.ObjectId
+  property   Property? @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+
+  projectId String?  @db.ObjectId
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  leadId String? @db.ObjectId
+  lead   Lead?   @relation(fields: [leadId], references: [id], onDelete: SetNull)
+
+  assignedToId String? @db.ObjectId
+  assignedTo   User?   @relation(fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteSettings {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  companyName      String   @default("DreamHome")
+  logo             String?
+  heroBadge        String   @default("Trusted Real Estate Partner")
+  heroTitle        String   @default("Find a Place You'll Love to Call Home.")
+  heroSubtitle     String   @default("Discover premium properties in the best locations.")
+  heroImage        String?
+  aboutTitle       String   @default("We Help You Find a Place You'll Love")
+  aboutSubtitle    String   @default("DreamHome is a trusted real-estate partner helping families and investors discover exceptional properties.")
+  aboutImage       String?
+  aboutText1       String   @default("Buying a property should feel exciting, not stressful.")
+  aboutText2       String   @default("From your first property search to final possession, our team is with you at every step.")
+  contactPhone     String   @default("+91 98765 4310")
+  contactEmail     String   @default("hello@dreamhome.com")
+  contactAddress   String   @default("Jaipur, Rajasthan, India")
+  contactHours     String   @default("Mon - Sat, 9:00 AM - 7:00 PM")
+  contactMapUrl    String   @default("")
+  ctaTitle         String   @default("Your Next Address Starts Here.")
+  ctaSubtitle      String   @default("Explore the best properties and make your move today.")
+  ctaPrimaryLabel  String   @default("Browse Properties")
+  ctaSecondaryLabel String  @default("Talk to an Expert")
+  whyChooseTitle   String   @default("Your Trusted Real Estate Partner")
+  whyChooseText    String   @default("We make property buying, selling and renting simple, transparent and stress-free.")
+  testimonialsTitle String  @default("What Our Clients Say")
+  testimonialsSubtitle String @default("Real stories from happy buyers, renters, and investors.")
+  footerText       String   @default("Find your perfect place with DreamHome.")
+  featuredPropertiesLabel String   @default("FEATURED PROPERTIES")
+  featuredPropertiesTitle String   @default("Handpicked Homes for You")
+  featuredPropertiesSubtitle String @default("Explore our most popular and premium properties.")
+  propertyTypesLabel String        @default("EXPLORE BY PROPERTY TYPE")
+  propertyTypesTitle String        @default("Find What Fits Your Lifestyle")
+  featuredProjectsLabel String     @default("FEATURED PROJECTS")
+  featuredProjectsTitle String     @default("Top Residential & Commercial Projects")
+  aboutStoryLabel String           @default("Our Story")
+  aboutStoryTitle String           @default("Your Trusted Real Estate Partner")
+  aboutCtaLabel String             @default("Talk to Our Team")
+  contactTitle String              @default("Let's Find Your DreamHome")
+  contactSubtitle String           @default("Have a question about a property, project or investment? Our team is ready to help.")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}

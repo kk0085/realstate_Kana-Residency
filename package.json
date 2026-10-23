@@ -1,0 +1,13 @@
+{
+  "name": "realstate",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix fronted",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:full": "concurrently -n backend,frontend -c blue,green \"npm:dev:backend\" \"npm:dev:frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
